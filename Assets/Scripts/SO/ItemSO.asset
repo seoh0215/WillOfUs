@@ -26,8 +26,8 @@ MonoBehaviour:
       1\uC7A5 \uBF51\uC2B5\uB2C8\uB2E4."
     template: {fileID: 21300000, guid: 8171303141187fb4aae04026f8154573, type: 3}
     cardImage: {fileID: 21300000, guid: df414b31bc9ccb44f8388193e17d7105, type: 3}
-    count: 0
-    inDeck: 0
+    count: 1
+    inDeck: 1
   - name: "\uD76C\uC0DD"
     type: ability
     content: "\uD328\uC5D0\uC11C 1\uC7A5\uC744 \uBC84\uB9AC\uACE0, \uCE74\uB4DC\uB97C
@@ -51,44 +51,44 @@ MonoBehaviour:
     cardImage: {fileID: 21300000, guid: 2c5909bf1828c694d82a271cf4c2aaf3, type: 3}
     count: 1
     inDeck: 1
-  - name: "\uC815\uD654"
+  - name: "\uC804\uB2A5"
     type: ability
-    content: "\uBAA8\uB4E0 \uC885\uB958\uC758 \uC694\uCCAD\uC744 \uD574\uACB0\uD569\uB2C8\uB2E4."
+    content: "\uC7AC\uD574\uAC00 \uC544\uB2CC \uC694\uCCAD\uC744 \uD574\uACB0\uD569\uB2C8\uB2E4."
     template: {fileID: 21300000, guid: 8171303141187fb4aae04026f8154573, type: 3}
     cardImage: {fileID: 21300000, guid: e1450b826d9d629428675877f72f7cf2, type: 3}
     count: 0
     inDeck: 0
   - name: "\uD3ED\uC6B0"
     type: hazard
-    content: "\uBC84\uB824\uC9C0\uBA74 \uC7AC\uD574 \uCE74\uB4DC\uB85C \uBCC0\uD569\uB2C8\uB2E4."
+    content: 
     template: {fileID: 21300000, guid: 1fb6a82705e133f45a19bd7826c2f06f, type: 3}
     cardImage: {fileID: 21300000, guid: cd5529d9c9d933441b3b1541a3010453, type: 3}
     count: 1
     inDeck: 1
   - name: "\uAC00\uBB44"
     type: hazard
-    content: "\uBC84\uB824\uC9C0\uBA74 \uC7AC\uD574 \uCE74\uB4DC\uB85C \uBCC0\uD569\uB2C8\uB2E4."
+    content: 
     template: {fileID: 21300000, guid: 1fb6a82705e133f45a19bd7826c2f06f, type: 3}
     cardImage: {fileID: 21300000, guid: 3c35b0a688bae9047b7a0aff47d839c0, type: 3}
     count: 1
     inDeck: 1
   - name: "\uD55C\uD30C"
     type: hazard
-    content: "\uBC84\uB824\uC9C0\uBA74 \uC7AC\uD574 \uCE74\uB4DC\uB85C \uBCC0\uD569\uB2C8\uB2E4."
+    content: 
     template: {fileID: 21300000, guid: 1fb6a82705e133f45a19bd7826c2f06f, type: 3}
     cardImage: {fileID: 21300000, guid: 117b73fdbbc74344fbad6ea7ba15ab4e, type: 3}
-    count: 0
-    inDeck: 0
+    count: 1
+    inDeck: 1
   - name: "\uD3ED\uC5FC"
     type: hazard
-    content: "\uBC84\uB824\uC9C0\uBA74 \uC7AC\uD574 \uCE74\uB4DC\uB85C \uBCC0\uD569\uB2C8\uB2E4."
+    content: 
     template: {fileID: 21300000, guid: 1fb6a82705e133f45a19bd7826c2f06f, type: 3}
     cardImage: {fileID: 21300000, guid: 60a91f82ad3df9344b877ae98fd41204, type: 3}
-    count: 0
-    inDeck: 0
+    count: 1
+    inDeck: 1
   - name: "\uB099\uB8B0"
     type: hazard
-    content: "\uBC84\uB824\uC9C0\uBA74 \uC7AC\uD574 \uCE74\uB4DC\uB85C \uBCC0\uD569\uB2C8\uB2E4."
+    content: 
     template: {fileID: 21300000, guid: 1fb6a82705e133f45a19bd7826c2f06f, type: 3}
     cardImage: {fileID: 21300000, guid: a90c7093f5aecde40a5b4ae2741c814c, type: 3}
     count: 0
@@ -112,7 +112,21 @@ MonoBehaviour:
     content: 
     template: {fileID: 21300000, guid: 5aac2a11e880dd4469fe2e42f22f858e, type: 3}
     cardImage: {fileID: 21300000, guid: b2389a13fb4f7434a85ae4fab008ea17, type: 3}
-    count: 2
+    count: 1
+    inDeck: 1
+  - name: "\uC18D\uC0AD\uC784"
+    type: bless
+    content: 
+    template: {fileID: 21300000, guid: 5aac2a11e880dd4469fe2e42f22f858e, type: 3}
+    cardImage: {fileID: 21300000, guid: 136c01e3016b0574ab9065c443792270, type: 3}
+    count: 1
+    inDeck: 1
+  - name: "\uD569\uB9AC\uD654"
+    type: bless
+    content: 
+    template: {fileID: 21300000, guid: 5aac2a11e880dd4469fe2e42f22f858e, type: 3}
+    cardImage: {fileID: 21300000, guid: 643d6653e1e906545a870763515a0993, type: 3}
+    count: 1
     inDeck: 1
   - name: "\uD589\uC6B4"
     type: bless
@@ -121,42 +135,56 @@ MonoBehaviour:
     cardImage: {fileID: 21300000, guid: 7357770f0f26b764a8531ccca7e8f842, type: 3}
     count: 1
     inDeck: 1
+  - name: "\uAC00\uD638"
+    type: bless
+    content: 
+    template: {fileID: 21300000, guid: 5aac2a11e880dd4469fe2e42f22f858e, type: 3}
+    cardImage: {fileID: 21300000, guid: 44733441bae9552419e466d412a62a28, type: 3}
+    count: 1
+    inDeck: 1
+  - name: "\uD22C\uC7C1"
+    type: bless
+    content: 
+    template: {fileID: 21300000, guid: 5aac2a11e880dd4469fe2e42f22f858e, type: 3}
+    cardImage: {fileID: 21300000, guid: 3e0ae911e44daec4cb84af0574c3aa97, type: 3}
+    count: 1
+    inDeck: 1
   - name: "\uD3ED\uC6B0"
     type: disaster
-    content: "\uD134 \uC885\uB8CC \uC2DC \uD328\uC5D0 \uB0A8\uC544 \uC788\uB2E4\uBA74
-      \uC7AC\uD574\uAC00 \uBC1C\uC0DD\uD569\uB2C8\uB2E4."
+    content: "\uD328\uB97C \uB2E4\uC2DC \uBF51\uC744 \uC2DC,   \uC774 \uCE74\uB4DC\uAC00
+      \uC788\uB2E4\uBA74     \uD48D\uC694\uAC00 \uAC10\uC18C\uD569\uB2C8\uB2E4."
     template: {fileID: 21300000, guid: 7b0f9cfa1a17b854c9633c445d7d1286, type: 3}
     cardImage: {fileID: 21300000, guid: cd5529d9c9d933441b3b1541a3010453, type: 3}
     count: 0
     inDeck: 0
   - name: "\uAC00\uBB44"
     type: disaster
-    content: "\uD134 \uC885\uB8CC \uC2DC \uD328\uC5D0 \uB0A8\uC544 \uC788\uB2E4\uBA74
-      \uC7AC\uD574\uAC00 \uBC1C\uC0DD\uD569\uB2C8\uB2E4."
+    content: "\uD328\uB97C \uB2E4\uC2DC \uBF51\uC744 \uC2DC,   \uC774 \uCE74\uB4DC\uAC00
+      \uC788\uB2E4\uBA74     \uD48D\uC694\uAC00 \uAC10\uC18C\uD569\uB2C8\uB2E4."
     template: {fileID: 21300000, guid: 7b0f9cfa1a17b854c9633c445d7d1286, type: 3}
     cardImage: {fileID: 21300000, guid: 3c35b0a688bae9047b7a0aff47d839c0, type: 3}
     count: 0
     inDeck: 0
   - name: "\uD55C\uD30C"
     type: disaster
-    content: "\uD134 \uC885\uB8CC \uC2DC \uD328\uC5D0 \uB0A8\uC544 \uC788\uB2E4\uBA74
-      \uC7AC\uD574\uAC00 \uBC1C\uC0DD\uD569\uB2C8\uB2E4."
+    content: "\uD328\uB97C \uB2E4\uC2DC \uBF51\uC744 \uC2DC,   \uC774 \uCE74\uB4DC\uAC00
+      \uC788\uB2E4\uBA74     \uD48D\uC694\uAC00 \uAC10\uC18C\uD569\uB2C8\uB2E4."
     template: {fileID: 21300000, guid: 7b0f9cfa1a17b854c9633c445d7d1286, type: 3}
     cardImage: {fileID: 21300000, guid: 117b73fdbbc74344fbad6ea7ba15ab4e, type: 3}
     count: 0
     inDeck: 0
   - name: "\uD3ED\uC5FC"
     type: disaster
-    content: "\uD134 \uC885\uB8CC \uC2DC \uD328\uC5D0 \uB0A8\uC544 \uC788\uB2E4\uBA74
-      \uC7AC\uD574\uAC00 \uBC1C\uC0DD\uD569\uB2C8\uB2E4."
+    content: "\uD328\uB97C \uB2E4\uC2DC \uBF51\uC744 \uC2DC,   \uC774 \uCE74\uB4DC\uAC00
+      \uC788\uB2E4\uBA74     \uD48D\uC694\uAC00 \uAC10\uC18C\uD569\uB2C8\uB2E4."
     template: {fileID: 21300000, guid: 7b0f9cfa1a17b854c9633c445d7d1286, type: 3}
     cardImage: {fileID: 21300000, guid: 60a91f82ad3df9344b877ae98fd41204, type: 3}
     count: 0
     inDeck: 0
   - name: "\uB099\uB8B0"
     type: disaster
-    content: "\uD134 \uC885\uB8CC \uC2DC \uD328\uC5D0 \uB0A8\uC544 \uC788\uB2E4\uBA74
-      \uC7AC\uD574\uAC00 \uBC1C\uC0DD\uD569\uB2C8\uB2E4."
+    content: "\uD328\uB97C \uB2E4\uC2DC \uBF51\uC744 \uC2DC,   \uC774 \uCE74\uB4DC\uAC00
+      \uC788\uB2E4\uBA74     \uD48D\uC694\uAC00 \uAC10\uC18C\uD569\uB2C8\uB2E4."
     template: {fileID: 21300000, guid: 7b0f9cfa1a17b854c9633c445d7d1286, type: 3}
     cardImage: {fileID: 21300000, guid: a90c7093f5aecde40a5b4ae2741c814c, type: 3}
     count: 0

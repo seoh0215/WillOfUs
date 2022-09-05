@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class CardManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] Transform cardSelectPoint;
     [SerializeField] Transform leftCardPos;
     [SerializeField] Transform rightCardPos;
+    [SerializeField] Button drawAgainBtn;
 
     public GameObject cardSelectPopUp;
     public int cardHandCount;
@@ -30,6 +32,7 @@ public class CardManager : MonoBehaviour
         SetupCardBuffer();
         for (int i = 0; i < cardHandCount; i++)
             AddCard();
+        drawAgainBtn.onClick.AddListener(drawAgain);
     }
 
     private void Update()
@@ -42,8 +45,11 @@ public class CardManager : MonoBehaviour
     //카드 뽑기
     public Item PopCard()
     {
-        if(itemBuffer.Count == 0)
+        if (itemBuffer.Count == 0)
+        {
             SetupCardBuffer();
+            dumpBuffer.Clear();
+        }
         
         Item card = itemBuffer[0];
         itemBuffer.RemoveAt(0);
@@ -198,8 +204,8 @@ public class CardManager : MonoBehaviour
     //카드 버리기
     void DumpCard(Card card)
     {
-        cardHand.Remove(card);
         dumpBuffer.Add(card.item);
+        cardHand.Remove(card);
 
         card.transform.DOKill();
         isCardSelect = false;
@@ -245,8 +251,8 @@ public class CardManager : MonoBehaviour
                 case "초월":
                     for (int i = 0; i < cardHandCount; i++)
                     {
-                        if (cardHand[i] == selectedCard) continue;
                         dumpBuffer.Add(cardHand[i].item);
+                        if (cardHand[i] == selectedCard) continue;
                         DestroyImmediate(cardHand[i].gameObject);
                     }
                     cardHand.Clear();
@@ -259,7 +265,7 @@ public class CardManager : MonoBehaviour
                     RequestManager.Inst.HandleRequest(selectedCard);
                     break;
 
-                case "정화":
+                case "전능":
                     RequestManager.Inst.HandleRequest(selectedCard);
                     break;
 
@@ -271,26 +277,44 @@ public class CardManager : MonoBehaviour
         {
             RequestManager.Inst.HandleRequest(selectedCard);
         }
-        
-        /* 시련 카드가 버려질 때 효과 //사용이랑은 다르다 여기서 빠져야됨;;
-        if(currentCardType == "hazard")
-        {
-            var cardObj = Instantiate(cardPrefab, cardSpawnPoint.position, Quaternion.identity);
-            var card = cardObj.GetComponent<Card>();
-
-            for(int i=0; i < itemSO.items.Length; i++)
-            {
-                if (itemSO.items[i].type == "disaster" && itemSO.items[i].name == currentCardName)
-                    card.Setup(itemSO.items[i]);
-            }
-            
-            cardHand.Add(card);
-            SetOriginOrder();
-            CardAlignment();
-        }
-        */
 
         DumpCard(selectedCard);
+    }
+
+    public void AddDisasterCard(Card selectedCard)
+    {
+        var cardObj = Instantiate(cardPrefab, cardSpawnPoint.position, Quaternion.identity);
+        var card = cardObj.GetComponent<Card>();
+
+        for (int i = 0; i < itemSO.items.Length; i++)
+        {
+            if (itemSO.items[i].type == "disaster" && itemSO.items[i].name == selectedCard.item.name)
+                card.Setup(itemSO.items[i]);
+        }
+
+        cardHand.Add(card);
+        SetOriginOrder();
+        CardAlignment();
+    }
+
+    void drawAgain()
+    {
+        if (!RequestManager.Inst.isRequestActive)
+        {
+            foreach (var card in cardHand)
+            {
+                dumpBuffer.Add(card.item);
+                card.transform.DOKill();
+                DestroyImmediate(card.gameObject);
+            }
+            cardHand.Clear();
+            for (int i = 0; i < cardHandCount; i++)
+            {
+                AddCard();
+            }
+
+            GaugeManager.Inst.UpdateRefinementGauge(-2);
+        }
     }
 
     public void CardMouseOver(Card card)

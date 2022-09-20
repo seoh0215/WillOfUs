@@ -63,7 +63,7 @@ public class GaugeManager : MonoBehaviour
     IEnumerator DecreaseAbundance()
     { 
         yield return new WaitForSeconds(1.0f);
-        abundance--;
+        abundance-=2;
         abundanceGaugeMask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, abundanceGaugeOrgSize * (abundance/maxAbundance));
         abundanceGaugeTMP.text = (abundance + "/" + maxAbundance).ToString();
         isDelay = false;
@@ -78,12 +78,14 @@ public class GaugeManager : MonoBehaviour
             faith = (int)maxFaith;
             isDarkAge = true;
         }
-        else if(faith <= 100)
+
+        if(faith <= 100)
         {
             isDarkAge = false;
             CameraEffect.Inst.intensity = 0;
         }
-        else if(faith <= 0)
+
+        if(faith <= 0)
             faith = 0;
 
         faithGaugeMask.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, faithGaugeOrgSize * (faith/maxFaith));

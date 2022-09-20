@@ -19,6 +19,16 @@ public class GameManager : MonoBehaviour
         StartCoroutine(DownloadEventSO());
     }
 
+    private void Update()
+    {
+        if(GaugeManager.Inst.getFaithGauge() <= 0 || GaugeManager.Inst.getAbundanceGauge() <= 0)
+            #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+            #else
+                Application.Quit();
+            #endif
+    }
+
     IEnumerator DownloadItemSO()
     {
         UnityWebRequest www = UnityWebRequest.Get(url_card);

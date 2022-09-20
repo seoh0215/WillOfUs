@@ -213,9 +213,9 @@ public class RequestManager : MonoBehaviour
             DestroyImmediate(requestObject);
             isRequestActive = false;
 
-            if ((turn == 0 && refinement == 3) ||
-            (turn == 1 && refinement == 5) ||
-            (turn == 2 && refinement == 10))
+            if ((turn == 0 && refinement == 4) ||
+            (turn == 1 && refinement == 8) ||
+            (turn == 2 && refinement == 12))
                 ShowMainRequest(turn);
             
         });

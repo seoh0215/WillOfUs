@@ -11,6 +11,7 @@ public class CardManager : MonoBehaviour
 
     [SerializeField] ItemSO itemSO;
     [SerializeField] GameObject cardPrefab;
+    [SerializeField] GameObject gaugeUI;
     [SerializeField] List<Card> cardHand;
     [SerializeField] Transform cardSpawnPoint;
     [SerializeField] Transform cardDumpPoint;
@@ -221,6 +222,7 @@ public class CardManager : MonoBehaviour
         isCardSelect = true;
         DumpCard(selectedCard);
         cardSelectPopUp.SetActive(false);
+        gaugeUI.SetActive(true);
     }
 
     //카드 사용
@@ -244,12 +246,14 @@ public class CardManager : MonoBehaviour
 
                 case "희생":
                     cardSelectPopUp.SetActive(true);
+                    gaugeUI.SetActive(false);
                     AddCard();
                     AddCard();
                     break;
 
                 case "초월":
-                    for (int i = 0; i < cardHandCount; i++)
+                    int size = cardHand.Count;
+                    for (int i = 0; i < size; i++)
                     {
                         dumpBuffer.Add(cardHand[i].item);
                         if (cardHand[i] == selectedCard) continue;
@@ -257,7 +261,7 @@ public class CardManager : MonoBehaviour
                     }
                     cardHand.Clear();
 
-                    for (int i = 0; i < cardHandCount; i++)
+                    for (int i = 0; i < 5; i++)
                         AddCard();
                     break;
 
@@ -303,6 +307,8 @@ public class CardManager : MonoBehaviour
         {
             foreach (var card in cardHand)
             {
+                if(card.item.type == "disaster")
+                    GaugeManager.Inst.UpdateMaxAbundance();
                 dumpBuffer.Add(card.item);
                 card.transform.DOKill();
                 DestroyImmediate(card.gameObject);
@@ -313,7 +319,7 @@ public class CardManager : MonoBehaviour
                 AddCard();
             }
 
-            GaugeManager.Inst.UpdateRefinementGauge(-2);
+            GaugeManager.Inst.UpdateRefinementGauge(-1);
         }
     }
 

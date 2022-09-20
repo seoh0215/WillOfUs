@@ -15,7 +15,7 @@ TagManager:
   - 
   - background
   - cardArea
-  - 
+  - window
   - 
   - 
   - 
@@ -49,4 +49,7 @@ TagManager:
     locked: 0
   - name: request
     uniqueID: 1089459967
+    locked: 0
+  - name: window
+    uniqueID: 1408467291
     locked: 0

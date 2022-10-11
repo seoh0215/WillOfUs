@@ -9,18 +9,17 @@ public class RequestManager : MonoBehaviour
     public static RequestManager Inst { get; private set; }
     void Awake() => Inst = this;
 
-    //필요한 목록: eventSO, 요청 창, 요청이 나타날 위치, 요청 아이콘 이미지, 요청 아이콘 위치
+    //필요한 목록: eventSO, 요청 창, 요청이 나타날 위치, 요청 아이콘 이미지
     [SerializeField] EventSO eventSO;
     [SerializeField] GameObject requestPopUp;
     [SerializeField] Transform requestSpawnPoint;
-    //[SerializeField] Transform[] requestIconPoints;
     [SerializeField] Button[] requestIcon; // 0 = main / 1 = normal / 2 = disaster / 3 = special
     [SerializeField] Sprite[] requestIconImgList;
     [SerializeField] int turn;
 
-    List<Event> requestBuffer;
-    List<Event> mainRequestBuffer;
-    List<Event> currentRequestBuffer;
+    public List<Event> requestBuffer; //일반 또는 재난 이벤트를 저장하는 list
+    public List<Event> currentRequestBuffer; //현재 이벤트 아이콘으로 표시되는 이벤트를 저장하는 list
+    List<Event> mainRequestBuffer; //메인 이벤트를 저장하는 list
 
     GameObject requestObject;
     int currentIndex;
@@ -29,23 +28,17 @@ public class RequestManager : MonoBehaviour
 
     public bool isRequestActive = false; //요청 창 활성화 여부
 
-    private void Start()
-    {
-        SetupRequestBuffer();
-    }
-
     private void Update()
     {
         if (!isRequestActive)
             Invoke(nameof(UpdateRequestIcon), 0.5f);
     }
 
-    //요청 리스트 기본 설정하기
-    void SetupRequestBuffer()
+    //이벤트 리스트 설정하기
+    public void SetupRequesSystem()
     {
         requestBuffer = new List<Event>();
         mainRequestBuffer = new List<Event>();
-        currentRequestBuffer = new List<Event>();
 
         for(int i=0; i<eventSO.events.Length; i++)
         {
@@ -63,9 +56,17 @@ public class RequestManager : MonoBehaviour
 
         ShuffleRequestBuffer();
 
-        for (int i = 0; i < 5; i++)
-        {
-            currentRequestBuffer.Add(requestBuffer[i]);
+        if(!GameManager.Inst.isLoad){
+            currentRequestBuffer = new List<Event>();
+            for (int i = 0; i < 5; i++)
+                currentRequestBuffer.Add(requestBuffer[i]);
+        }
+        else{
+            currentRequestBuffer = GameManager.Inst.currentRequestBufferDataList;
+            if(currentRequestBuffer.Count < 5){
+                for(int i=0; i<(5 - currentRequestBuffer.Count); i++)
+                    currentRequestBuffer.Add(requestBuffer[i]);
+            }
         }
     }
 
@@ -99,6 +100,7 @@ public class RequestManager : MonoBehaviour
         }
     }
 
+    //이벤트 순서 섞기
     void ShuffleRequestBuffer()
     {
         for (int i = 0; i < requestBuffer.Count; i++)
@@ -110,7 +112,7 @@ public class RequestManager : MonoBehaviour
         }
     }
 
-    //요청 보여주기
+    //이벤트 표시
     void ShowRequest(int requestIdx)
     {
         isRequestActive = true;
@@ -132,6 +134,7 @@ public class RequestManager : MonoBehaviour
         }
     }
 
+    //메인 이벤트 표시
     void ShowMainRequest(int mainRequestIdx)
     {
         requestObject = Instantiate(requestPopUp, requestSpawnPoint.position, Quaternion.identity);
@@ -143,7 +146,6 @@ public class RequestManager : MonoBehaviour
             isRequestActive = false;
         });
 
-        mainRequestBuffer.RemoveAt(mainRequestIdx);
         GaugeManager.Inst.UpdateRefinementGauge(0, true);
         turn++;
     }
@@ -179,6 +181,7 @@ public class RequestManager : MonoBehaviour
         ShowResult();
     }
 
+    //이벤트 결과로 인한 게이지 변화 관리
     void HandleGauge()
     {
         int faithGauge = currentRequestBuffer[currentIndex].requestResultGauge[0];
@@ -197,10 +200,11 @@ public class RequestManager : MonoBehaviour
         GaugeManager.Inst.UpdateRefinementGauge((isAccept) ? 1 : 0);
     }
 
+    //이벤트 결과창 표시
     void ShowResult()
     {
         HandleGauge();
-        int refinement = GaugeManager.Inst.getRefinementGauge();
+        int refinement = GaugeManager.Inst.refinement;
 
         DestroyImmediate(requestObject);
 

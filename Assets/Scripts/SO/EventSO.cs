@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class Event
 {
+    public string requestName; //요청의 이름
     public string requestType; //요청의 종류
     public string requestContent; //요청의 내용
     public string[] availableCard; //해결 가능한 카드

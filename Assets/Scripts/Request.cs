@@ -13,11 +13,13 @@ public class Request : MonoBehaviour
     public Button requestInnerBtn;
 
     public void Setup(Event request, bool isResult = false, bool isAccept = true, bool isExcept = false)
-    {
+    {   
+        //이벤트창 출력
         this.request = request;
         requestContent.text = this.request.requestContent.ToString(); //요청 내용
         requestInnerBtn.GetComponentInChildren<TMP_Text>().text = "넘기기";
 
+        //이벤트 결과창 출력
         if (isResult)
         {
             if (!isAccept) requestResultContent.text = this.request.requestResultContent[0].ToString(); //요청 실패시 내용

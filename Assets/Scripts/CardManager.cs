@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CardManager : MonoBehaviour
 {
@@ -11,36 +12,77 @@ public class CardManager : MonoBehaviour
 
     [SerializeField] ItemSO itemSO;
     [SerializeField] GameObject cardPrefab;
-    [SerializeField] GameObject gaugeUI;
-    [SerializeField] List<Card> cardHand;
+    [SerializeField] GameObject gaugeUI; 
     [SerializeField] Transform cardSpawnPoint;
     [SerializeField] Transform cardDumpPoint;
     [SerializeField] Transform cardSelectPoint;
     [SerializeField] Transform leftCardPos;
     [SerializeField] Transform rightCardPos;
     [SerializeField] Button drawAgainBtn;
+    [SerializeField] int cardHandCount;
 
     public GameObject cardSelectPopUp;
-    public int cardHandCount;
+    public List<Card> cardHand = new List<Card>();
+    public List<Item> itemBuffer;
+    public List<Item> dumpBuffer;
 
-    List<Item> itemBuffer;
-    List<Item> dumpBuffer;
     Card selectedCard;
     bool isCardSelect = false;
-    
-    private void Start()
-    {
-        SetupCardBuffer();
-        for (int i = 0; i < cardHandCount; i++)
-            AddCard();
-        drawAgainBtn.onClick.AddListener(drawAgain);
-    }
 
     private void Update()
     {
         if (isCardSelect)
             DragCard();
+    }
 
+    //카드 덱 초기 설정
+    public void SetupCardSystem()
+    {
+        if(!GameManager.Inst.isLoad){
+            itemBuffer = new List<Item>();
+            dumpBuffer = new List<Item>();  
+            
+            //기본 덱 만들기
+            for (int i = 0; i < itemSO.items.Length; i++) 
+            {
+                for (int j = 0; j < itemSO.items[i].count; j++) 
+                {
+                    if(itemSO.items[i].inDeck)
+                        itemBuffer.Add(itemSO.items[i]);
+                }
+            }
+
+             //덱 섞기
+            for (int i = 0; i < itemBuffer.Count; i++) 
+            {
+                int index = Random.Range(i, itemBuffer.Count);
+                Item tmp = itemBuffer[i];
+                itemBuffer[i] = itemBuffer[index];
+                itemBuffer[index] = tmp;
+            }
+
+            for (int i = 0; i < cardHandCount; i++)
+                AddCard();
+        }
+        else{
+            itemBuffer = GameManager.Inst.itemBufferDataList;
+            dumpBuffer = GameManager.Inst.dumpBufferDataList;
+
+            for (int i = 0; i < PlayerPrefs.GetInt("cardHandCount"); i++){
+                Transform spawnPoint = cardSpawnPoint;
+                var cardObj = Instantiate(cardPrefab, spawnPoint.position, Quaternion.identity);
+                var card = cardObj.GetComponent<Card>();
+
+                card.Setup(GameManager.Inst.cardHandDataList[0]);
+                GameManager.Inst.cardHandDataList.RemoveAt(0);
+
+                cardHand.Add(card);
+                SetOriginOrder();
+                CardAlignment();
+            }
+        }
+
+        drawAgainBtn.onClick.AddListener(drawAgain);
     }
 
     //카드 뽑기
@@ -48,7 +90,23 @@ public class CardManager : MonoBehaviour
     {
         if (itemBuffer.Count == 0)
         {
-            SetupCardBuffer();
+            for (int i = 0; i < itemSO.items.Length; i++) 
+            {
+                for (int j = 0; j < itemSO.items[i].count; j++) 
+                {
+                    if(itemSO.items[i].inDeck)
+                        itemBuffer.Add(itemSO.items[i]);
+                }
+            }
+
+             //덱 섞기
+            for (int i = 0; i < itemBuffer.Count; i++) 
+            {
+                int index = Random.Range(i, itemBuffer.Count);
+                Item tmp = itemBuffer[i];
+                itemBuffer[i] = itemBuffer[index];
+                itemBuffer[index] = tmp;
+            }
             dumpBuffer.Clear();
         }
         
@@ -57,6 +115,7 @@ public class CardManager : MonoBehaviour
         return card;
     }
 
+    //카드를 버린 카드 리스트에서 뽑기
     public Item PopFromDumpBuffer()
     {
         if(dumpBuffer.Count > 1)
@@ -72,32 +131,6 @@ public class CardManager : MonoBehaviour
         Item card = dumpBuffer[0];
         dumpBuffer.RemoveAt(0);
         return card;
-    }
-
-    void SetupCardBuffer()
-    {
-        itemBuffer = new List<Item>();
-        dumpBuffer = new List<Item>();
-
-        //기본 덱 만들기
-        for (int i = 0; i < itemSO.items.Length; i++) 
-        {
-            Item card = itemSO.items[i];
-            for (int j = 0; j < card.count; j++) 
-            {
-                if(card.inDeck)
-                    itemBuffer.Add(card);
-            }
-        }
-
-        //덱 섞기
-        for (int i = 0; i < itemBuffer.Count; i++) 
-        {
-            int index = Random.Range(i, itemBuffer.Count);
-            Item tmp = itemBuffer[i];
-            itemBuffer[i] = itemBuffer[index];
-            itemBuffer[index] = tmp;
-        }
     }
 
     //카드 간 order in layer 설정
@@ -285,6 +318,7 @@ public class CardManager : MonoBehaviour
         DumpCard(selectedCard);
     }
 
+    //재해 카드 손에 추가
     public void AddDisasterCard(Card selectedCard)
     {
         var cardObj = Instantiate(cardPrefab, cardSpawnPoint.position, Quaternion.identity);
@@ -292,8 +326,10 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < itemSO.items.Length; i++)
         {
-            if (itemSO.items[i].type == "disaster" && itemSO.items[i].name == selectedCard.item.name)
+            if (itemSO.items[i].type == "disaster" && itemSO.items[i].name == selectedCard.item.name){
                 card.Setup(itemSO.items[i]);
+                break;
+            }
         }
 
         cardHand.Add(card);
@@ -301,6 +337,7 @@ public class CardManager : MonoBehaviour
         CardAlignment();
     }
 
+    //다시 뽑기
     void drawAgain()
     {
         if (!RequestManager.Inst.isRequestActive)
@@ -323,6 +360,7 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    //카드에 마우스 커서를 올렸을 때
     public void CardMouseOver(Card card)
     {
         if(!isCardSelect)
@@ -331,6 +369,7 @@ public class CardManager : MonoBehaviour
         EnlargeCard(true, card);
     }
 
+    //카드에서 마우스 커서가 나갔을 때
     public void CardMouseExit(Card card)
     {
         EnlargeCard(false, card);
@@ -356,6 +395,7 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    //카드를 클릭했을 때
     public void CardMouseClick(Card card)
     {
         SelectDumpCard(card);

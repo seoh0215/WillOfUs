@@ -38,6 +38,8 @@ public class CardManager : MonoBehaviour
     //카드 덱 초기 설정
     public void SetupCardSystem()
     {
+        AudioManager.Inst.PlaySound("draw");
+
         if(!GameManager.Inst.isLoad){
             itemBuffer = new List<Item>();
             dumpBuffer = new List<Item>();  
@@ -81,7 +83,6 @@ public class CardManager : MonoBehaviour
                 CardAlignment();
             }
         }
-
         drawAgainBtn.onClick.AddListener(drawAgain);
     }
 
@@ -355,8 +356,9 @@ public class CardManager : MonoBehaviour
             {
                 AddCard();
             }
-
+            
             GaugeManager.Inst.UpdateRefinementGauge(-1);
+            AudioManager.Inst.PlaySound("draw");
         }
     }
 
@@ -378,6 +380,7 @@ public class CardManager : MonoBehaviour
     public void CardMouseDrag() //마우스 드래그시 카드 선택 = true
     {
         isCardSelect = true;
+        AudioManager.Inst.PlaySound("selectCard");
     }
 
     public void CardMouseUp() //마우스 드래그를 놓으면 카드 사용

@@ -16,6 +16,7 @@ public class MenuUI : MonoBehaviour
             GameManager.Inst.gamePaused = true;
             menuPopup.transform.SetAsLastSibling();
             Camera.main.cullingMask = Camera.main.cullingMask & ~(1 << LayerMask.NameToLayer("Default"));
+            AudioManager.Inst.PlaySound("click");
         });
     }
 
@@ -24,6 +25,7 @@ public class MenuUI : MonoBehaviour
         Time.timeScale = 1f;
         GameManager.Inst.gamePaused = false;
         Camera.main.cullingMask |= 1 << LayerMask.NameToLayer("Default");
+        AudioManager.Inst.PlaySound("click");
     }
 
     public void GameExit()
@@ -36,6 +38,7 @@ public class MenuUI : MonoBehaviour
     }
 
     public void GameSave(){
+        AudioManager.Inst.PlaySound("click");
         GameManager.Inst.isSave = true;
         
         PlayerPrefs.SetInt("isSave", 1);
@@ -75,5 +78,6 @@ public class MenuUI : MonoBehaviour
 
     public void CloseSavePopup(){
         savePopup.SetActive(false);
+        AudioManager.Inst.PlaySound("click");
     }
 }

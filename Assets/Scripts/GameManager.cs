@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         gamePaused = false;
         Camera.main.cullingMask = -1;
+        AudioManager.Inst.PlaySound("click");
 
         PlayerPrefs.DeleteAll();
         isLoad = false;
@@ -85,6 +86,7 @@ public class GameManager : MonoBehaviour
 
     public void GameLoad(){
         if(PlayerPrefs.HasKey("isSave") && PlayerPrefs.GetInt("isSave") == 1){
+            AudioManager.Inst.PlaySound("click");
             isLoad = true;
             //cardHand 불러오기
             for(int i=0; i<PlayerPrefs.GetInt("cardHandCount"); i++){

@@ -1,6 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - AudioManager
     - CameraEffect
     - Card
     - CardManager
@@ -67,6 +68,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
     - Class: 91
       Script: {instanceID: 0}
     - Class: 104
@@ -121,6 +126,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 14286}
     - Class: 114
       Script: {instanceID: 14460}
+    - Class: 114
+      Script: {instanceID: 22646}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -740,6 +747,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 5f3d30d77fac7a13f4a831dc7d126640
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: AudioManager
   platform: 5
   scenePathNames:
   - Assets/Scenes/MainScene.unity

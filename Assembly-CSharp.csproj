@@ -36,6 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\AudioManager.cs" />
      <Compile Include="Assets\Scripts\CameraEffect.cs" />
      <Compile Include="Assets\Scripts\Card.cs" />
      <Compile Include="Assets\Scripts\CardManager.cs" />
